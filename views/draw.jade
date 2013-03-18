@@ -1,0 +1,65 @@
+extends layout
+
+block head
+  title DocuSign | Draw Signature')
+
+block content
+  #draw-form
+    #heading Draw your signature here
+      #parameters.section.panel.unstyled.form-horizontal
+        .control-group
+          label.control-label(for="maxWidth") Max Width
+          .controls
+            input#maxWidth.input-small(type='text',placeholder= 'Max Width')
+            span.help-inline.helpText This is the maximum width the line can be set to based on the velocity of the curve. (If velocity > max, set velocity to max).')
+        .control-group
+          label.control-label(for="minWidth") Min Width'
+          .controls
+            input#minWidth.input-small(type='text',placeholder= 'Min Width')
+            span.help-inline.helpText This is the minimum width the line can be set to based on the velocity of the curve. (If velocity < min, set velocity to min).')
+        .control-group.hide
+          label.control-label(for="samples") Number of Samples'
+          .controls
+            input#samples.input-small(placeholder= 'Samples'))
+            span.help-inline.helpText The number of velocity samples to capture. The final width is the average of these samples.')
+        .control-group.hide
+          label.control-label(for="multiplier") Multiplier'
+          .controls
+            input#multiplier.input-small(placeholder= 'Multiplier'))
+            span.help-inline.helpText The number to multiply the velocity of the curve. Normal drawing results in velocities ~0.5. velocity * multiplier results in a more meaningful number.')
+        .control-group.hide
+          label.control-label(for="defaultWidth") Default Width'
+          .controls
+            input#defaultWidth.input-small(placeholder= 'Default Width')
+            span.help-inline.helpText Default width for the pen. Applies only for fixed width
+        .control-group.hide
+          label.control-label(for="drawAfter") Draw After'
+          .controls
+            input#drawAfter.input-small(placeholder= 'Draw After')
+            span.help-inline.helpText Draw after x number of points. This applies to variable width only.
+        .control-group.hide
+          label.control-label(for="variableWidth") Variable Width'
+          .controls
+            input#variable.input-small(type='checkbox')
+            span.help-inline.helpText Variable width Yes/No.')
+        .control-group
+          label.radio
+            .controls Pen 1 - Faster thinner
+              input#pen1(type='radio',name='optionsRadios')
+          label.radio
+            .controls Pen 2 - Faster bigger
+              input#pen2(type='radio',name='optionsRadios')
+          label.radio
+            .controls Pen 3 - Marker
+              input#pen3(type='radio',name='optionsRadios')
+
+      #clear
+        a#clearLink.btn.btn-small() 'Clear'
+    canvas#mycanvas(width='490',height='220')
+    canvas#mycanvas2(width='490',height='220').hide
+
+  script(src='/javascripts/drawview.js')
+  script
+    var drawModel = new DrawModel();
+    var draw = new DrawView({model: drawModel});
+
